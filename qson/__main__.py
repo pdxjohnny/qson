@@ -36,13 +36,20 @@ def start(port=server.PORT, daemon=False):
         make_daemon()
     test_server.serve_forever()
 
-def query(*args):
+def method(*args):
     """
     Runs client methods
     """
     test_client = client.client()
     action = getattr(test_client, args[0])
     print action(*args[1:])
+
+def query(*args):
+    """
+    Runs client get or set
+    """
+    test_client = client.client()
+    print test_client(*args)
 
 def main():
     action = getattr(sys.modules[__name__], sys.argv[1])
