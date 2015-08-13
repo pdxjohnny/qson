@@ -9,6 +9,8 @@ import sys
 import server
 import client
 
+VERSION = "0.0.1"
+
 def make_daemon():
     # Daemonize to run in background
     pid = os.fork()

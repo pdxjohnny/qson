@@ -8,7 +8,7 @@ NAME = "qson"
 def update_version_files(version):
 	files = {
 		"setup.py": ("  version = ", "  version = \'%s\',\n"),
-		"qson/qson.py": ("__version__ = ", "__version__ = \"%s\"\n"),
+		"qson/__main__.py": ("VERSION = ", "VERSION = \"%s\"\n"),
 		}
 	for name in files:
 		read_file = open(name,"rb")
