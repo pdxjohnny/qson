@@ -3,7 +3,7 @@ import json
 import SocketServer
 import BaseHTTPServer
 
-PORT = 34324
+PORT = 0
 ADDRESS = "0.0.0.0"
 
 class ThreadedHTTPServer(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer):
@@ -15,6 +15,9 @@ class ThreadedHTTPServer(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer)
     def send_headers(self, client):
         client.send_header("Access-Control-Allow-Origin", "*")
         client.send_header("Content-Type", "application/json")
+
+    def port(self):
+        return self.socket.getsockname()[1]
 
     def got_request(self, data, client_socket):
         """
@@ -64,7 +67,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             # Deal with the recived json
             self.server.got_request(post_body, self.wfile)
         except Exception as error:
-            self.send_response(500)
+            self.send_response(501)
             self.server.send_headers(self)
             self.end_headers()
             self.wfile.write(str(error) + "\n")

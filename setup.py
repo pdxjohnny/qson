@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = "qson",
   packages = ["qson"], # this must be the same as the name above
-  version = '0.0.1',
+  version = '0.0.2',
   description = "Quick JSON based key value store over http",
   author = "John Andersen",
   author_email = "johnandersenpdx@gmail.com",
