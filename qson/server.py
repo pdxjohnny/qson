@@ -6,7 +6,7 @@ import BaseHTTPServer
 PORT = 0
 ADDRESS = "0.0.0.0"
 
-class ThreadedHTTPServer(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer):
+class Server(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer):
     """Handle requests in a separate thread."""
     def __init__(self, *args, **kwargs):
         BaseHTTPServer.HTTPServer.__init__(self, *args, **kwargs)

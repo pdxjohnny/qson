@@ -9,7 +9,7 @@ import sys
 import server
 import client
 
-VERSION = "0.0.2"
+VERSION = "0.0.3"
 
 def make_daemon():
     # Daemonize to run in background
@@ -33,10 +33,10 @@ def start(port=server.PORT, daemon=False):
     if type(port) != int:
         port = int(port)
     address = (server.ADDRESS, port)
-    test_server = server.ThreadedHTTPServer(address, server.Handler)
+    test_server = server.Server(address, server.Handler)
+    print test_server.port()
     if daemon is not False:
         make_daemon()
-    print test_server.port()
     test_server.serve_forever()
 
 def method(*args):

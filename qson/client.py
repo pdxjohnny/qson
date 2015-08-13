@@ -36,13 +36,15 @@ class client(object):
             "key": key,
             "value": value,
         }
-        return self.send(data)["value"]
+        response = self.send(data)
+        return response["value"]
 
     def get(self, key):
         data = {
             "key": key,
         }
-        return self.send(data)["value"]
+        response = self.send(data)
+        return response["value"]
 
     def __call__(self, key, value=False):
         if value:
