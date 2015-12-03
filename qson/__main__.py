@@ -11,7 +11,7 @@ import pydoc
 import server
 import client
 
-VERSION = "0.0.3"
+VERSION = "0.0.4"
 
 def make_daemon():
     # Daemonize to run in background
