@@ -5,6 +5,8 @@ Quick JSON based key value store over http
 """
 import os
 import sys
+import json
+import pydoc
 
 import server
 import client
@@ -45,7 +47,13 @@ def method(*args):
     """
     test_client = client.client(port=args[0])
     action = getattr(test_client, args[1])
-    print action(*args[2:])
+    decodedArgs = []
+    for arg in args[2:]:
+        try:
+            decodedArgs.append(json.loads(arg))
+        except:
+            decodedArgs.append(arg)
+    print action(*decodedArgs)
 
 def query(*args):
     """
@@ -55,8 +63,12 @@ def query(*args):
     print test_client(*args[1:])
 
 def main():
-    action = getattr(sys.modules[__name__], sys.argv[1])
-    action(*sys.argv[2:])
+    try:
+        action = getattr(sys.modules[__name__], sys.argv[1])
+        action(*sys.argv[2:])
+    except IndexError as error:
+        print "Usage {0} function [args]".format(sys.argv[0])
+        print pydoc.render_doc(sys.modules[__name__], "Help on %s")
 
 if __name__ == '__main__':
     main()

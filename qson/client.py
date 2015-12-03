@@ -19,12 +19,16 @@ class client(object):
         return response
 
     def send(self, data):
-        key = data["key"]
+        if "key" in data:
+            key = data["key"]
+        else:
+            key = False
         data = json.dumps(data)
         response = self.post(data)
         try:
             response = json.load(response)
-        except Exception:
+        except Exception as error:
+            print error
             response = {
                 "key": key,
                 "value": None,
@@ -45,6 +49,36 @@ class client(object):
         }
         response = self.send(data)
         return response["value"]
+
+    def dump(self):
+        data = {
+            "dump": True,
+        }
+        response = self.send(data)
+        return response
+
+    def load(self, loadData):
+        data = {
+            "load": loadData,
+        }
+        response = self.send(data)
+        return response["key"]
+
+    def saveFile(self, filePath):
+        response = self.dump()
+        fileHandle = open(filePath, 'wb')
+        json.dump(response, fileHandle)
+        fileHandle.close()
+        return response
+
+    def loadFile(self, filePath):
+        fileHandle = open(filePath, 'rb')
+        data = {
+            "load": json.load(fileHandle),
+        }
+        fileHandle.close()
+        response = self.send(data)
+        return response["key"]
 
     def __call__(self, key, value=False):
         if value:

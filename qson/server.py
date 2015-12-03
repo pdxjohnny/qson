@@ -37,6 +37,13 @@ class Server(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer):
                     "key": key,
                     "value": self.database[key],
                 }
+        # If they want everything
+        elif "dump" in data:
+            response = self.database
+        # If they want to load a lot of things
+        elif "load" in data:
+            self.database.update(data["load"])
+            response = {'key': True}
         # Dump the json into the client socket
         if response is not None:
             json.dump(response, client_socket)
